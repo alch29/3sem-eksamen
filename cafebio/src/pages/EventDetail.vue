@@ -62,7 +62,6 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { syncFacebookEventsToFirebase } from '../facebookService';
 import { fetchEventFromFirebase } from '../firebaseService';
 
 const route = useRoute();
