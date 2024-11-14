@@ -34,7 +34,7 @@
                 <li><a href="#">Bestil billet</a></li>
                 <li><a href="#">Gavekort</a></li>
             </ul>
-            
+            <img src="../assets/images/kontrolrapport.png" alt="Se kontrolrapport">
         </div>
 
     </div>
