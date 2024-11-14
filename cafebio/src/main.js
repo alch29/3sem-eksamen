@@ -1,11 +1,9 @@
-import './assets/main.css'
+import './assets/main.css';
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';  // Importér routeren fra `src/router/index.js`
 
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-
-const app = createApp(App)
-
-app.use(router)
-
-app.mount('#app')
+// Opret app og brug routeren
+const app = createApp(App);
+app.use(router);  // Tilføj routeren til applikationen
+app.mount('#app');  // Monter applikationen
