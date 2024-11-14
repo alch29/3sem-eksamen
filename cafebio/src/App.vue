@@ -3,6 +3,7 @@ import Header from './components/Header.vue';
 import { onMounted } from 'vue';
 import { fetchFacebookEvents } from './facebookService';  // Følger den vores sti?
 import { syncFacebookEventsToFirebase } from './facebookService';
+import Footer from './components/Footer.vue';
 
 onMounted(async () => {
   const events = await fetchFacebookEvents();
@@ -17,6 +18,7 @@ onMounted(async () => {
     <div>
     <Header></Header>
     <router-view/>
+    <Footer></Footer>
   </div>
 </template>
 

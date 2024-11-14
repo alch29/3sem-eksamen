@@ -40,3 +40,16 @@ a{
     font-weight: 400;
     font-style: normal;
 }
+
+:root {
+    /*Farver*/
+    --red: #AE2824;
+    --green: #2F5E28;
+    --wine: #4D1614;
+    --salmon: #F4A38A;
+    --warm-grey: #4E4934;
+    --curry: #FBBD29;
+    --off-black: #252422;
+    --off-white: #EFEFEC;
+    --sand: #F6EADA;
+}
