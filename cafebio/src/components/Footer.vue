@@ -34,7 +34,7 @@
                 <li><a href="#">Bestil billet</a></li>
                 <li><a href="#">Gavekort</a></li>
             </ul>
-            <img src="../assets/images/kontrolrapport.png" alt="Se kontrolrapport">
+            <img class="kontrolrapport" src="../assets/images/kontrolrapport.png" alt="Se kontrolrapport">
         </div>
 
     </div>
@@ -77,4 +77,8 @@
     li a:hover {
         opacity: 0.6;
     }
+    .kontrolrapport {
+        height: 40px;
+    }
+
 </style>
