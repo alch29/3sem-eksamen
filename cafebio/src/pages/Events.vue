@@ -1,6 +1,8 @@
 <script setup>
     import { ref, onMounted, watchEffect } from 'vue';
     import { fetchEventsFromFirebase } from '../firebaseService';  // Importér funktionen fra firebaseService
+    import { useRoute } from 'vue-router';
+    import Button from '../components/CTAButton.vue';
 
     const events = ref([]);  // Opret en reaktiv liste til at gemme events
 
@@ -14,6 +16,20 @@
     watchEffect(async () => {
       events.value = await fetchEventsFromFirebase();
     });
+
+    const route = useRoute();
+    const event = ref(null);
+
+    // Funktion til at formatere datoen alene
+    const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("da-DK", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    });
+    };
+
 </script>
 
 <template>
@@ -22,12 +38,73 @@
             <h1>Arrangementer</h1>
         </div>
         <div class="event" v-for="event in events" :key="event.id">
-          <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
+            <div class="banner-container">
+                <img class="banner-image" src="/src/assets/images/event-img.png" alt="Event banner" />
+            </div>
+            <div>
+                <h4>{{ event.name }}</h4>
+            </div>
+            <!-- Start Dato -->
+            <div class="start-day">
+              <p>
+              <span>
+                  <i class="fa-regular fa-calendar-days"></i>
+                  Start dato:
+              </span> {{ formatDate(event.start_time) }}
+              </p>
+            </div>
+
+            <!-- Slut Dato -->
+            <div class="end-day">
+                <p>
+                <span>
+                    <i class="fa-regular fa-calendar-days"></i>
+                    Slut dato:
+                </span> {{ formatDate(event.end_time) }}
+                </p>      
+            </div>
+            <div class="description">
+                <p><em>{{ event.description }}</em></p>
+            </div>
+            <Button hoverStyle="sand-hover">Læs mere</Button>
+
+          <router-link :to="`/events/${event.id}`"></router-link>
 
         </div>
     </div>
 </template>
 
 <style scoped>
+    
+    .events-container {
+        display: grid;
+        gap: 40px;
+        margin: 38px;
+    }
+    .event {
+        height: 220px;
+        width: 320px;
+        box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+        border-radius: 4px;
+
+    }
+
+    .banner-container {
+        width: 320px;
+        height: 90px;
+        overflow: hidden; /* Sikrer at billedet bliver beskåret til containerens størrelse */
+        border-radius: 4px 4px 0 0;
+    }
+
+    .banner-image {
+        width: 100%; /* Sørg for at billedet fylder hele containerens bredde */
+        height: 100%; /* Fylder hele containerens højde */
+        object-fit: cover; /* Billedet bliver beskåret for at dække hele containeren uden at strække */
+        object-position: center; /* Centrerer billedet i containeren */
+    }
+
+    .discription {
+        width: 320px;
+    }
 
 </style>

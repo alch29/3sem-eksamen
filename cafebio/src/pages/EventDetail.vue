@@ -67,7 +67,7 @@
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { fetchEventFromFirebase } from '../firebaseService';
-import Button from '../components/CTAButton.vue'
+import Button from '../components/CTAButton.vue';
 
 const route = useRoute();
 const event = ref(null);

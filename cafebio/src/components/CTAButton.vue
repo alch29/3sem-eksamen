@@ -44,8 +44,8 @@
   
   <style scoped>
   .button {
-    padding: 8px 20px;
-    font-size: 1.2rem;
+    padding: 6px 18px;
+    font-size: 0.8rem;
     border: solid 2px var(--wine);
     border-radius: 8px;
     cursor: pointer;
@@ -79,5 +79,12 @@
     background-color: transparent;
     color: var(--wine);
     border: solid 2px var(--wine);
+  }
+
+  @media (min-width: 800px) {
+    
+    .button {
+      font-size: 1rem;
+    }
   }
   </style>
