@@ -17,7 +17,7 @@ import Button from './CTAButton.vue'
             <input type="text" placeholder="E-mail">
         </div>
         <div class="submit-button">
-        <Button hoverStyle="red-hover">Tilmeld</Button>
+            <Button hoverStyle="red-hover">Tilmeld</Button>
         </div>
     </form>
 </template>
