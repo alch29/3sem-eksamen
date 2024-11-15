@@ -1,31 +1,49 @@
 <template>
-    <button
+    <!-- <button
       :class="['custom-button', hoverStyle]"
       @click="handleClick"
     >
       <slot></slot>
-    </button>
+    </button> -->
+    <a 
+      :href="href" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      :class="['button', hoverStyle]"
+    >
+      <slot></slot>
+    </a>
   </template>
   
   <script setup>
-  import { defineProps, defineEmits } from 'vue';
+  import { defineProps } from 'vue';
   
+  // const props = defineProps({
+  //   hoverStyle: {
+  //     type: String,
+  //     default: 'red-hover', // Standard hover-stil er red-hover"
+  //   },
+  // });
+  
+  // const emit = defineEmits(['click']);
+  
+  // function handleClick() {
+  //   emit('click');
+  // }
   const props = defineProps({
+    href: {
+      type: String,
+      required: true
+    },
     hoverStyle: {
       type: String,
-      default: 'red-hover', // Standard hover-stil er red-hover"
-    },
+      default: 'red-hover'
+    }
   });
-  
-  const emit = defineEmits(['click']);
-  
-  function handleClick() {
-    emit('click');
-  }
   </script>
   
   <style scoped>
-  .custom-button {
+  .button {
     padding: 8px 20px;
     font-size: 1.2rem;
     border: solid 2px var(--wine);
@@ -35,28 +53,31 @@
     font-weight: 600;
     font-style: normal;
     box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+    display: inline-block;
+    text-decoration: none;
   }
   
-  .custom-button.red-hover {
+  .button.red-hover {
     background-color: var(--wine);
     color: white;
   }
   
-  .custom-button.sand-hover {
+  .button.sand-hover {
     background-color: var(--wine);
     color: white;
   }
   
   /* Hover-effekt til rød baggrund */
-  .custom-button.red-hover:hover {
-    background-color: var(--red);
+  .button.red-hover:hover {
+    background-color: transparent;
     color: white;
     border: solid 2px white;
   }
   
   /* Hover-effekt til sand baggrund */
-  .custom-button.sand-hover:hover {
-    background-color: var(--sand);
+  .button.sand-hover:hover {
+    background-color: transparent;
+    color: var(--wine);
     border: solid 2px var(--wine);
   }
   </style>
