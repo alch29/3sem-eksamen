@@ -4,53 +4,57 @@
             <img class="banner-image" src="/src/assets/images/event-img.png" alt="Event banner" />
         </div>
         <div class="main-details">
-        <h1>{{ event.name }}</h1>
-         <!-- Lokation -->
-         <p v-if="event.place && event.place.name">
-        <i class="fa-solid fa-location-dot"></i>
-        {{ event.place.name }}
-        </p>
-    
-      <!-- Start Dato -->
-       <div class="start-day">
-        <p>
-        <span>
-            <i class="fa-regular fa-calendar-days"></i>
-            Start dato:
-        </span> {{ formatDate(event.start_time) }}
-        </p>
-        <p>
-        <span>
-            <i class="fa-regular fa-clock"></i>
-             Starttidspunkt:
-            </span> {{ formatTime(event.start_time) }}
-        </p>
-    </div>
-
-    <!-- Slut Dato -->
-     <div class="end-day">
-        <p>
-        <span>
-            <i class="fa-regular fa-calendar-days"></i>
-            Slut dato:
-        </span> {{ formatDate(event.end_time) }}
-        </p>
-        <p>
-        <span>
-            <i class="fa-regular fa-clock"></i>
-            Sluttidspunkt:
-        </span> {{ formatTime(event.end_time) }}
-        </p>
-     
-      <p class="text-event"><em>{{ event.description }}</em></p>
-       
-      <!-- Tilmeld-Knap -->
-      <a v-if="event.id" :href="`https://www.facebook.com/events/${event.id}`" target="_blank" class="tilmeld-knap">
-      Tilmeld
-      </a>
+          <div>
+            <div class="back-button">
+              <a href="#"><i class="fa-solid fa-arrow-left-long"></i><strong>Tilbage</strong></a>
+            </div>
+            <h1>{{ event.name }}</h1>
+            <!-- Lokation -->
+            <p v-if="event.place && event.place.name">
+              <i class="fa-solid fa-location-dot"></i>
+              {{ event.place.name }}
+            </p>
       
-      </div>
-    </div>
+            <!-- Start Dato -->
+            <div class="start-day">
+              <p>
+              <span>
+                  <i class="fa-regular fa-calendar-days"></i>
+                  Start dato:
+              </span> {{ formatDate(event.start_time) }}
+              </p>
+              <p>
+              <span>
+                  <i class="fa-regular fa-clock"></i>
+                  Starttidspunkt:
+                  </span> {{ formatTime(event.start_time) }}
+              </p>
+            </div>
+
+            <!-- Slut Dato -->
+            <div class="end-day">
+                <p>
+                <span>
+                    <i class="fa-regular fa-calendar-days"></i>
+                    Slut dato:
+                </span> {{ formatDate(event.end_time) }}
+                </p>
+                <p>
+                <span>
+                    <i class="fa-regular fa-clock"></i>
+                    Sluttidspunkt:
+                </span> {{ formatTime(event.end_time) }}
+                </p>       
+            </div>
+            <div>
+              <p class="text-event"><em>{{ event.description }}</em></p>
+            </div>
+            <div>
+              <Button :href="`https://www.facebook.com/events/${event.id}`" hoverStyle="sand-hover">Tilmeld
+              </Button>
+            </div>
+          </div>
+        </div>
    </div>
     
     <div v-else>
@@ -63,6 +67,7 @@
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { fetchEventFromFirebase } from '../firebaseService';
+import Button from '../components/CTAButton.vue'
 
 const route = useRoute();
 const event = ref(null);
@@ -110,17 +115,6 @@ watch(
 </script>
 
 <style scoped>
-h1 {
-  font-size: 3rem;
-}
-
-p {
-  font-size: 1rem;
-  line-height: 1.5;
-  margin-bottom: 0.5rem;
-  display: flex;
-  align-items: center;
-}
 
 span {
   margin-right: 0.5rem;
@@ -143,6 +137,7 @@ i {
 
 .text-event {
   margin-top: 2rem;
+  margin-bottom: 40px;
 }
 
 .banner-container {
@@ -160,32 +155,40 @@ i {
 .main-details {
   display: flex;
   flex-direction: column;  
-  padding: 80px;
-  width: 50%;
-  margin: auto;
-
-}
-
-
-.tilmeld-knap {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 20px;
-    font-size: 1rem;
-    color: #1e1e1e;
-    background-color: #F4A38A;
-    border-radius: 5px;
-    text-decoration: none;
-    text-align: center;
-    transition: background-color 0.3s;
-}
-
-.tilmeld-knap:hover {
-    background-color: #AE2824;
-  color: #F4A38A;
+  padding: 20px 38px 60px 38px;
+  width: 100%;
+  /* margin: auto; */
 }
 
 .fa-location-dot{
     color: #AE2824;
+}
+.fa-arrow-left-long {
+  margin-right: 0;
+}
+.back-button {
+  margin-bottom: 28px;
+}
+
+.back-button a {
+  color: var(--off-black);
+  font-size: 1.2rem;
+}
+.back-button i {
+  color: var(--off-black);
+  font-size: 1.1rem;
+}
+.back-button a:hover {
+  opacity: 0.6;
+}
+
+@media (min-width: 800px) {
+  .text-event {
+    max-width: 500px;
+  }
+
+  .main-details {
+    align-items: center;
+  }
 }
 </style>
