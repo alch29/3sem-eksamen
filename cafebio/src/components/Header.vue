@@ -8,7 +8,7 @@
     </div>
 
     <!-- Menu -->
-    <ul v-show="menuOpen || !isMobile" class="menu-items">
+    <ul :class="{ 'menu-items': true, 'menu-open': menuOpen }" v-show="menuOpen || !isMobile">
       <!-- Forside -->
       <li><a href="#">Forside</a></li>
 
@@ -17,10 +17,13 @@
 
       <!-- Biograf -->
       <li class="dropdown">
-        <div @click="toggleDropdown('biograf')">
-          Biograf <i :class="openDropdown === 'biograf' ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
+        <div class="dropdown-header" @click="isMobile ? toggleDropdown('biograf') : null">
+          Biograf
+          <i :class="isMobile 
+            ? (openDropdown === 'biograf' ? 'fa-solid fa-minus' : 'fa-solid fa-plus') 
+            : 'fa-solid fa-chevron-down'"></i>
         </div>
-        <ul v-if="openDropdown === 'biograf'" class="under-items">
+        <ul v-show="openDropdown === 'biograf'" class="under-items">
           <li><a href="#">Film program</a></li>
           <li><a href="#">Kommende film</a></li>
           <li><a href="#">Cinemateket i Cafébiografen</a></li>
@@ -34,10 +37,13 @@
 
       <!-- Café -->
       <li class="dropdown">
-        <div @click="toggleDropdown('cafe')">
-          Café <i :class="openDropdown === 'cafe' ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
+        <div class="dropdown-header" @click="isMobile ? toggleDropdown('cafe') : null">
+          Café
+          <i :class="isMobile 
+            ? (openDropdown === 'cafe' ? 'fa-solid fa-minus' : 'fa-solid fa-plus') 
+            : 'fa-solid fa-chevron-down'"></i>
         </div>
-        <ul v-if="openDropdown === 'cafe'" class="under-items">
+        <ul v-show="openDropdown === 'cafe'" class="under-items">
           <li><a href="#">Menu kort</a></li>
           <li><a href="#">Reserver bord</a></li>
         </ul>
@@ -46,12 +52,15 @@
       <!-- Gavekort -->
       <li><a href="#">Gavekort</a></li>
 
-      <!-- Dynamisk dropdown for arrangementer -->
+      <!-- Dynamisk dropdown for Arrangementer -->
       <li class="dropdown">
-        <div @click="toggleDropdown('arrangementer')">
-          Arrangementer <i :class="openDropdown === 'arrangementer' ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
+        <div class="dropdown-header" @click="isMobile ? toggleDropdown('arrangementer') : null">
+          Arrangementer
+          <i :class="isMobile 
+            ? (openDropdown === 'arrangementer' ? 'fa-solid fa-minus' : 'fa-solid fa-plus') 
+            : 'fa-solid fa-chevron-down'"></i>
         </div>
-        <ul v-if="openDropdown === 'arrangementer'" class="under-items">
+        <ul v-show="openDropdown === 'arrangementer'" class="under-items">
           <li v-for="event in events" :key="event.id">
             <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
           </li>
@@ -60,10 +69,13 @@
 
       <!-- Mere -->
       <li class="dropdown">
-        <div @click="toggleDropdown('mere')">
-          Mere <i :class="openDropdown === 'mere' ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
+        <div class="dropdown-header" @click="isMobile ? toggleDropdown('mere') : null">
+          Mere
+          <i :class="isMobile 
+            ? (openDropdown === 'mere' ? 'fa-solid fa-minus' : 'fa-solid fa-plus') 
+            : 'fa-solid fa-chevron-down'"></i>
         </div>
-        <ul v-if="openDropdown === 'mere'" class="under-items">
+        <ul v-show="openDropdown === 'mere'" class="under-items">
           <li><a href="#">Ledige stillinger</a></li>
           <li><a href="#">Ledsagerkort</a></li>
           <li><a href="#">Kontakt</a></li>
@@ -75,12 +87,13 @@
     <button v-if="!isMobile" class="header-button"><p><strong>Kontakt</strong></p></button>
   </nav>
 </template>
-  
+
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { fetchEventsFromFirebase } from '../firebaseService';
+import Button from './CTAButton.vue'
 
-const menuOpen = ref(false); // Styrer menuens synlighed
+const menuOpen = ref(false);
 const openDropdown = ref(null);
 const isMobile = ref(window.innerWidth <= 768);
 const events = ref([]);
@@ -96,9 +109,9 @@ function toggleDropdown(name) {
 function handleResize() {
   isMobile.value = window.innerWidth <= 768;
 
-  // Luk menuen automatisk, når skærmen bliver stor
   if (!isMobile.value) {
     menuOpen.value = false;
+    openDropdown.value = null;
   }
 }
 
@@ -115,10 +128,11 @@ onBeforeUnmount(() => {
 <style scoped>
 nav {
   background-color: #AE2824;
+  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 20px 38px;
   position: relative;
 }
 
@@ -130,25 +144,24 @@ nav img {
   font-size: 24px;
   color: white;
   cursor: pointer;
-  display: block; /* Mobil først: hamburger synlig som standard */
+  display: block; 
 }
 
 .menu-items {
-  display: none;
   flex-direction: column;
   list-style: none;
   margin: 0;
   padding: 0;
   background-color: #AE2824;
   position: absolute;
-  top: 60px; /* Placeret under headeren */
+  top: 60px;
   left: 0;
   width: 100%;
   z-index: 10;
 }
 
-.menu-items[style*="display: flex"] {
-  display: flex;
+.menu-open {
+  display: flex; /* Vis menuen, når menuOpen er true */
 }
 
 .menu-items li {
@@ -157,14 +170,47 @@ nav img {
 }
 
 .menu-items li a {
-  color: white;
+  color: white; /* Standard farve */
   text-decoration: none;
+  transition: color 0.3s ease; /* Glidende farveskift */
 }
 
+.menu-items li a:hover {
+  color: #F4A38A; /* Hover farve */
+}
+
+/* Dropdown */
 .under-items {
-  display: none;
+  display: none; /* Skjult som standard */
   flex-direction: column;
   padding-left: 20px;
+}
+
+.under-items[style*="display: flex"], .under-items[style*="display: block"] {
+  display: flex; /* Vis dropdown-indholdet */
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dropdown-header i {
+  margin-left: 10px;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.dropdown .under-items li a {
+  color: white; /* Hvid tekst for dropdown */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.dropdown .under-items li a:hover {
+  color: #F4A38A; /* Hover farve for dropdown */
 }
 
 .dropdown .under-items li {
@@ -178,7 +224,7 @@ nav img {
   }
 
   .menu-items {
-    display: flex;
+    display: flex; /* Desktop: vis altid menuen */
     flex-direction: row;
     position: static;
     width: auto;
@@ -191,16 +237,43 @@ nav img {
   }
 
   .under-items {
+    display: none;
     position: absolute;
     top: 100%;
     left: 0;
     background-color: #AE2824;
-    display: none;
     z-index: 10;
   }
 
   .dropdown:hover .under-items {
-    display: block; /* Vis dropdown på hover på større skærme */
+    display: block; /* Vis dropdown på hover */
+  }
+
+  /* På desktop vises kun pil ned */
+  .dropdown-header i.fa-plus,
+  .dropdown-header i.fa-minus {
+    display: none;
   }
 }
-</style scoped>
+
+@media (max-width: 768px) {
+  /* På mobil vises kun "+" og "-" */
+  .dropdown-header i.fa-chevron-down {
+    display: none;
+  }
+}
+
+.header-button {
+  background-color: #F4A38A;
+  border: solid 2px #F4A38A;
+  border-radius: 12px;
+  padding: 8px 16px;
+  color: #AE2824;
+  cursor: pointer;
+}
+
+.header-button:hover {
+  background-color: #AE2824;
+  color: #F4A38A;
+}
+</style>
