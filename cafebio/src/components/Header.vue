@@ -142,6 +142,7 @@ nav img {
 }
 
 .hamburger-icon {
+  font-size: 24px;
   color: white;
   cursor: pointer;
   display: block; 
