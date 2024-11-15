@@ -84,7 +84,7 @@
     </ul>
 
     <!-- Kontakt-knap kun synlig på større skærme -->
-    <Button v-if="!isMobile" hoverStyle="red-hover">Kontakt</Button>
+    <Button v-if="!isMobile" hoverStyle="red-hover" :to="'/kontakt'">Kontakt</Button>
   </nav>
 </template>
 
@@ -102,8 +102,11 @@ async function loadEvents() {
   events.value = await fetchEventsFromFirebase();
 }
 
+
 function toggleDropdown(name) {
+  console.log(`Toggle dropdown for: ${name}`);
   openDropdown.value = openDropdown.value === name ? null : name;
+  menuOpen.value = true; // Sørg for menu forbliver åben.
 }
 
 function handleResize() {
@@ -162,8 +165,10 @@ nav img {
   z-index: 10;
 }
 
-.menu-open {
-  display: flex; /* Vis menuen, når menuOpen er true */
+..menu-open {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.5); /* Baggrunds-overlay */
 }
 
 /* Hovedlistepunkter */
@@ -179,14 +184,12 @@ nav img {
 
 /* Dropdown styling */
 .under-items {
-  display: none; /* Skjult som standard */
   flex-direction: column;
-  margin: 0;
-  padding: 0;
+  background-color: #AE2824;
 }
 
-.under-items[style*="display: flex"], .under-items[style*="display: block"] {
-  display: flex; /* Vis dropdown-indholdet */
+.under-items[style*="display: flex"] {
+  display: flex;
 }
 
 .dropdown-header {
@@ -247,7 +250,6 @@ nav img {
   }
 
   .under-items {
-    display: none;
     position: absolute;
     top: 100%;
     left: 0;
@@ -265,7 +267,5 @@ nav img {
     display: none;
   }
 }
-
-
 </style>
 
