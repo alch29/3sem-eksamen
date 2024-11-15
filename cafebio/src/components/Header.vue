@@ -1,131 +1,206 @@
 <template>
-    <nav @mouseleave="showDropdown = false">
-      <img src="../assets/images/Logo sommerfugl hvid.png" alt="Logo" />
-      <ul class="menu-items">
-        <li><a href="#">Forside</a></li>
-        <li><a href="#">Om os</a></li>
-        <li><a href="#">Biograf</a></li>
-        <li><a href="#">Café</a></li>
-        <li><a href="#">Gavekort</a></li>
-        <li @mouseover="showDropdown = true" class="dropdown">
-          <a href="#">Arrangementer <i class="fa-solid fa-angle-down"></i></a>
-          <ul v-if="showDropdown" @mouseover="showDropdown = true" @mouseleave="showDropdown = false" class="under-items">
-            <!-- Dropdown-menu holder sig åben, indtil musen forlader både menuen og dens elementer -->
-            <li v-for="event in events" :key="event.id">
-              <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
-            </li>
-          </ul>
-        </li>
-        <li><a href="#">Mere</a></li>
-      </ul>
-      <button class="header-button"><p><strong>Kontakt</strong></p></button>
-    </nav>
-  </template>
+  <nav>
+    <img src="../assets/images/Logo sommerfugl hvid.png" alt="Logo" />
+
+    <!-- Hamburger menu for små skærme -->
+    <div class="hamburger-icon" @click="menuOpen = !menuOpen" v-if="isMobile">
+      <i :class="menuOpen ? 'fa-solid fa-times' : 'fa-solid fa-bars'"></i>
+    </div>
+
+    <!-- Menu -->
+    <ul v-show="menuOpen || !isMobile" class="menu-items">
+      <!-- Forside -->
+      <li><a href="#">Forside</a></li>
+
+      <!-- Om os -->
+      <li><a href="#">Om os</a></li>
+
+      <!-- Biograf -->
+      <li class="dropdown">
+        <div @click="toggleDropdown('biograf')">
+          Biograf <i :class="openDropdown === 'biograf' ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
+        </div>
+        <ul v-if="openDropdown === 'biograf'" class="under-items">
+          <li><a href="#">Film program</a></li>
+          <li><a href="#">Kommende film</a></li>
+          <li><a href="#">Cinemateket i Cafébiografen</a></li>
+          <li><a href="#">Retbestilling</a></li>
+          <li><a href="#">Baby bio</a></li>
+          <li><a href="#">Senior bio</a></li>
+          <li><a href="#">Book en biografsal</a></li>
+          <li><a href="#">Filmklubber</a></li>
+        </ul>
+      </li>
+
+      <!-- Café -->
+      <li class="dropdown">
+        <div @click="toggleDropdown('cafe')">
+          Café <i :class="openDropdown === 'cafe' ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
+        </div>
+        <ul v-if="openDropdown === 'cafe'" class="under-items">
+          <li><a href="#">Menu kort</a></li>
+          <li><a href="#">Reserver bord</a></li>
+        </ul>
+      </li>
+
+      <!-- Gavekort -->
+      <li><a href="#">Gavekort</a></li>
+
+      <!-- Dynamisk dropdown for arrangementer -->
+      <li class="dropdown">
+        <div @click="toggleDropdown('arrangementer')">
+          Arrangementer <i :class="openDropdown === 'arrangementer' ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
+        </div>
+        <ul v-if="openDropdown === 'arrangementer'" class="under-items">
+          <li v-for="event in events" :key="event.id">
+            <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Mere -->
+      <li class="dropdown">
+        <div @click="toggleDropdown('mere')">
+          Mere <i :class="openDropdown === 'mere' ? 'fa-solid fa-minus' : 'fa-solid fa-plus'"></i>
+        </div>
+        <ul v-if="openDropdown === 'mere'" class="under-items">
+          <li><a href="#">Ledige stillinger</a></li>
+          <li><a href="#">Ledsagerkort</a></li>
+          <li><a href="#">Kontakt</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- Kontakt-knap kun synlig på større skærme -->
+    <button v-if="!isMobile" class="header-button"><p><strong>Kontakt</strong></p></button>
+  </nav>
+</template>
   
-  <script setup>
-    import { ref, onMounted } from 'vue';
-    import { fetchEventsFromFirebase } from '../firebaseService';
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { fetchEventsFromFirebase } from '../firebaseService';
 
-    const events = ref([]);  // Definer en reaktiv variabel til events
-    const showDropdown = ref(false);
+const menuOpen = ref(false); // Styrer menuens synlighed
+const openDropdown = ref(null);
+const isMobile = ref(window.innerWidth <= 768);
+const events = ref([]);
 
-    async function loadEvents() {
-    events.value = await fetchEventsFromFirebase();  // Hent events fra Firebase
-    }
+async function loadEvents() {
+  events.value = await fetchEventsFromFirebase();
+}
 
-    // Kald loadEvents, når komponenten monteres
-    onMounted(loadEvents);
+function toggleDropdown(name) {
+  openDropdown.value = openDropdown.value === name ? null : name;
+}
 
+function handleResize() {
+  isMobile.value = window.innerWidth <= 768;
 
-    // import { ref } from 'vue';
-    // import useEvents from '../useEvents.js';  // Importér `useEvents` som en funktion
+  // Luk menuen automatisk, når skærmen bliver stor
+  if (!isMobile.value) {
+    menuOpen.value = false;
+  }
+}
 
-    // const { events } = useEvents();  // Brug `useEvents()` til at få adgang til `events`
-    // const showDropdown = ref(false);
-  </script>
+onMounted(() => {
+  loadEvents();
+  window.addEventListener("resize", handleResize);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", handleResize);
+});
+</script>
 
 <style scoped>
-  nav {
-    background-color: #AE2824;
-    display: flex;
-    justify-content: space-around;
-    height: 90px;
-    position: relative;
-  }
-
-  nav img {
-    margin: 20px;
-  }
-  .menu-items {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .menu-items a{
-    color: white;
-    font-family: "gill-sans-nova", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    text-decoration: none;
-  }
-
-.dropdown {
-    position: relative;
-}
-
-  .under-items {
-  position: absolute;
-  top: 100%; /* Starter direkte under menu-punktet */
-  left: 0;
+nav {
   background-color: #AE2824;
-  padding: 10px 0;
-  list-style: none;
-  display: none; /* Skjult som standard */
-  min-width: 150px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  position: relative;
 }
 
-.dropdown:hover .under-items {
-  display: block;
+nav img {
+  height: 40px;
 }
-.under-items li {
+
+.hamburger-icon {
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  display: block; /* Mobil først: hamburger synlig som standard */
+}
+
+.menu-items {
+  display: none;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: #AE2824;
+  position: absolute;
+  top: 60px; /* Placeret under headeren */
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.menu-items[style*="display: flex"] {
+  display: flex;
+}
+
+.menu-items li {
+  padding: 10px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.menu-items li a {
+  color: white;
+  text-decoration: none;
+}
+
+.under-items {
+  display: none;
+  flex-direction: column;
+  padding-left: 20px;
+}
+
+.dropdown .under-items li {
   padding: 5px 20px;
 }
 
-.under-items a {
-  color: white;
-  text-decoration: none;
-  display: block;
-}
+/* Desktop styling */
+@media (min-width: 769px) {
+  .hamburger-icon {
+    display: none; /* Skjul hamburger på større skærme */
+  }
 
-.under-items a:hover {
-  color: rgba(250, 250, 250, 0.6);
-}
+  .menu-items {
+    display: flex;
+    flex-direction: row;
+    position: static;
+    width: auto;
+    background: none;
+  }
 
-/* Hover-effekt på hovedmenu-elementerne */
-.menu-items > li:hover > a {
-  color: rgba(250, 250, 250, 0.6);
-}
+  .menu-items li {
+    padding: 0 20px;
+    border: none;
+  }
 
-.header-button {
-  background-color: #F4A38A;
-  border: solid 2px #F4A38A;
-  border-radius: 12px;
-  padding: 12px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  align-self: center;
-  color: #AE2824;
-  cursor: pointer;
-}
+  .under-items {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #AE2824;
+    display: none;
+    z-index: 10;
+  }
 
-.header-button:hover {
-  background-color: #AE2824;
-  color: #F4A38A;
+  .dropdown:hover .under-items {
+    display: block; /* Vis dropdown på hover på større skærme */
+  }
 }
-
-</style>
+</style scoped>
