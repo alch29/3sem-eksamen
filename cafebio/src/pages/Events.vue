@@ -45,24 +45,26 @@
                 <div>
                     <h4><strong>{{ event.name }}</strong></h4>
                 </div>
-                <!-- Start Dato -->
-                <div class="start-day">
-                <p>
-                <span>
-                    <i class="fa-regular fa-calendar-days"></i>
-                    Start dato:
-                </span> {{ formatDate(event.start_time) }}
-                </p>
-                </div>
-
-                <!-- Slut Dato -->
-                <div class="end-day">
+                    <!-- Start Dato -->
+                    <div>
+                    <div class="start-day">
                     <p>
                     <span>
                         <i class="fa-regular fa-calendar-days"></i>
-                        Slut dato:
-                    </span> {{ formatDate(event.end_time) }}
-                    </p>      
+                        Start dato:
+                    </span> {{ formatDate(event.start_time) }}
+                    </p>
+                    </div>
+            
+                    <!-- Slut Dato -->
+                    <div class="end-day">
+                        <p>
+                        <span>
+                            <i class="fa-regular fa-calendar-days"></i>
+                            Slut dato:
+                        </span> {{ formatDate(event.end_time) }}
+                        </p>      
+                    </div>
                 </div>
                 <div class="description">
                     <p><em>{{ event.description }}</em></p>
@@ -86,13 +88,13 @@
         margin: 38px;
     }
     .event {
-        height: 320px;
+        height: auto;
         width: 100%;
         box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
         border-radius: 4px;
     }
     .event-text {
-        margin: 10px;
+        margin: 10px 10px 20px 10px;
         display: flex;
         flex-direction: column;
         gap: 8px;
