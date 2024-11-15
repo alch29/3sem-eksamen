@@ -84,7 +84,7 @@
     </ul>
 
     <!-- Kontakt-knap kun synlig på større skærme -->
-    <button v-if="!isMobile" class="header-button"><p><strong>Kontakt</strong></p></button>
+    <Button v-if="!isMobile" hoverStyle="red-hover">Kontakt</Button>
   </nav>
 </template>
 
@@ -95,7 +95,7 @@ import Button from './CTAButton.vue'
 
 const menuOpen = ref(false);
 const openDropdown = ref(null);
-const isMobile = ref(window.innerWidth <= 768);
+const isMobile = ref(window.innerWidth <= 1000);
 const events = ref([]);
 
 async function loadEvents() {
@@ -107,7 +107,7 @@ function toggleDropdown(name) {
 }
 
 function handleResize() {
-  isMobile.value = window.innerWidth <= 768;
+  isMobile.value = window.innerWidth <= 1000;
 
   if (!isMobile.value) {
     menuOpen.value = false;
@@ -126,6 +126,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+/* Generelle nav styling */
 nav {
   background-color: #AE2824;
   color: white;
@@ -141,12 +142,12 @@ nav img {
 }
 
 .hamburger-icon {
-  font-size: 24px;
   color: white;
   cursor: pointer;
   display: block; 
 }
 
+/* Menu styling */
 .menu-items {
   flex-direction: column;
   list-style: none;
@@ -164,6 +165,7 @@ nav img {
   display: flex; /* Vis menuen, når menuOpen er true */
 }
 
+/* Hovedlistepunkter */
 .menu-items li {
   padding: 10px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -172,18 +174,14 @@ nav img {
 .menu-items li a {
   color: white; /* Standard farve */
   text-decoration: none;
-  transition: color 0.3s ease; /* Glidende farveskift */
 }
 
-.menu-items li a:hover {
-  color: #F4A38A; /* Hover farve */
-}
-
-/* Dropdown */
+/* Dropdown styling */
 .under-items {
   display: none; /* Skjult som standard */
   flex-direction: column;
-  padding-left: 20px;
+  margin: 0;
+  padding: 0;
 }
 
 .under-items[style*="display: flex"], .under-items[style*="display: block"] {
@@ -203,22 +201,33 @@ nav img {
   transition: transform 0.3s ease;
 }
 
-.dropdown .under-items li a {
-  color: white; /* Hvid tekst for dropdown */
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.dropdown .under-items li a:hover {
-  color: #F4A38A; /* Hover farve for dropdown */
-}
-
 .dropdown .under-items li {
   padding: 5px 20px;
 }
 
+.dropdown .under-items li a {
+  color: white; /* Standard dropdown farve */
+  text-decoration: none;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.dropdown .under-items li a:hover {
+  color: #F4A38A; /* Hover farve */
+  background-color: rgba(255, 255, 255, 0.1); /* Hover baggrund */
+  border-radius: 5px;
+}
+
 /* Desktop styling */
-@media (min-width: 769px) {
+/* Mobil styling */
+@media (max-width: 1000px) { /* Ændret fra 768px til 1000px */
+  /* På mobil vises kun "+" og "-" */
+  .dropdown-header i.fa-chevron-down {
+    display: none;
+  }
+}
+
+/* Desktop styling */
+@media (min-width: 1001px) { /* Ændret fra 769px til 1001px */
   .hamburger-icon {
     display: none; /* Skjul hamburger på større skærme */
   }
@@ -256,24 +265,6 @@ nav img {
   }
 }
 
-@media (max-width: 768px) {
-  /* På mobil vises kun "+" og "-" */
-  .dropdown-header i.fa-chevron-down {
-    display: none;
-  }
-}
 
-.header-button {
-  background-color: #F4A38A;
-  border: solid 2px #F4A38A;
-  border-radius: 12px;
-  padding: 8px 16px;
-  color: #AE2824;
-  cursor: pointer;
-}
-
-.header-button:hover {
-  background-color: #AE2824;
-  color: #F4A38A;
-}
 </style>
+
