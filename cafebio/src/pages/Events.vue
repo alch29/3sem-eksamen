@@ -41,32 +41,36 @@
             <div class="banner-container">
                 <img class="banner-image" src="/src/assets/images/event-img.png" alt="Event banner" />
             </div>
-            <div>
-                <h4>{{ event.name }}</h4>
-            </div>
-            <!-- Start Dato -->
-            <div class="start-day">
-              <p>
-              <span>
-                  <i class="fa-regular fa-calendar-days"></i>
-                  Start dato:
-              </span> {{ formatDate(event.start_time) }}
-              </p>
-            </div>
-
-            <!-- Slut Dato -->
-            <div class="end-day">
+            <div class="event-text">
+                <div>
+                    <h4><strong>{{ event.name }}</strong></h4>
+                </div>
+                <!-- Start Dato -->
+                <div class="start-day">
                 <p>
                 <span>
                     <i class="fa-regular fa-calendar-days"></i>
-                    Slut dato:
-                </span> {{ formatDate(event.end_time) }}
-                </p>      
+                    Start dato:
+                </span> {{ formatDate(event.start_time) }}
+                </p>
+                </div>
+
+                <!-- Slut Dato -->
+                <div class="end-day">
+                    <p>
+                    <span>
+                        <i class="fa-regular fa-calendar-days"></i>
+                        Slut dato:
+                    </span> {{ formatDate(event.end_time) }}
+                    </p>      
+                </div>
+                <div class="description">
+                    <p><em>{{ event.description }}</em></p>
+                </div>
+                <div>
+                    <Button hoverStyle="sand-hover">Læs mere</Button>
+                </div>
             </div>
-            <div class="description">
-                <p><em>{{ event.description }}</em></p>
-            </div>
-            <Button hoverStyle="sand-hover">Læs mere</Button>
 
           <router-link :to="`/events/${event.id}`"></router-link>
 
@@ -82,15 +86,20 @@
         margin: 38px;
     }
     .event {
-        height: 220px;
-        width: 320px;
+        height: 320px;
+        width: 100%;
         box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
         border-radius: 4px;
-
+    }
+    .event-text {
+        margin: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 
     .banner-container {
-        width: 320px;
+        width: 100%;
         height: 90px;
         overflow: hidden; /* Sikrer at billedet bliver beskåret til containerens størrelse */
         border-radius: 4px 4px 0 0;
