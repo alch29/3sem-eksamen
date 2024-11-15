@@ -18,10 +18,20 @@ onMounted(async () => {
     <div>
     <Header></Header>
     <router-view/>
+    <div class="colour"></div>
     <Footer></Footer>
   </div>
 </template>
 
 <style scoped>
 
+</style>
+<style scoped>
+.colour {
+  background-color: #f7f787;
+  height: 800px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+}
 </style>
