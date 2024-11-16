@@ -33,7 +33,7 @@
 </script>
 
 <template>
-    <div>
+    <div class="background">
         <div>
             <h1>Arrangementer</h1>
         </div>
@@ -70,19 +70,29 @@
                     <div class="description">
                         <p><em>{{ event.description }}</em></p>
                     </div>
-                    <div class="events-button">
+                    <!-- <div class="events-button">
                         <Button hoverStyle="sand-hover">Læs mere</Button>
-                    </div>
+                    </div> -->
                 </div>
-
-            <router-link :to="`/events/${event.id}`"></router-link>
-
+                <div class="events-button">
+                    <router-link :to="`/events/${event.id}`">
+                        <Button hoverStyle="sand-hover">Læs mere</Button>
+                    </router-link>
+                </div>
+                <router-link :to="`/events/${event.id}`"></router-link>
             </div>
         </div>
     </div>
 </template>
 
 <style scoped>
+    .background {
+        background-image: url('../assets/images/site-background.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+    }
     
     .events-container {
         display: grid;
@@ -90,11 +100,14 @@
         margin: 38px;
     }
     .event {
+        background-color: white;
         height: auto;
         width: 100%;
         box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
         border-radius: 4px;
         overflow: hidden; 
+        display: flex;
+        flex-direction: column;
     }
     .event-text {
         margin: 10px 10px 20px 10px;
@@ -105,7 +118,7 @@
 
     h1 {
         text-align: center;
-        margin-top: 38px;
+        padding-top: 38px;
     }
 
     .banner-container {
@@ -157,6 +170,9 @@
     .events-button {
         align-self: flex-end;
         justify-self: flex-end;
+        margin-top: auto;
+        margin-bottom: 12px;
+        margin-right: 12px;
     }
 
     @media (min-width: 800px) {

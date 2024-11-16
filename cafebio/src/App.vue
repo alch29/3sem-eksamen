@@ -18,7 +18,7 @@ onMounted(async () => {
     <div>
     <Header></Header>
     <router-view/>
-    <div class="colour"></div>
+    <!-- <div class="colour"></div> -->
     <Footer></Footer>
   </div>
 </template>
