@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div>
       <h1>Facebook Events</h1>
       <ul>
@@ -30,4 +30,4 @@
   
   <style scoped>
 
-  </style>
+  </style> -->
