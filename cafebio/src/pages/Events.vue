@@ -70,9 +70,6 @@
                     <div class="description">
                         <p><em>{{ event.description }}</em></p>
                     </div>
-                    <!-- <div class="events-button">
-                        <Button hoverStyle="sand-hover">Læs mere</Button>
-                    </div> -->
                 </div>
                 <div class="events-button">
                     <router-link :to="`/events/${event.id}`">
@@ -97,12 +94,14 @@
     .events-container {
         display: grid;
         gap: 40px;
-        margin: 38px;
+        padding: 38px 38px 80px 38px;
+        justify-items: center;
     }
     .event {
         background-color: white;
         height: auto;
         width: 100%;
+        max-width: 568px;
         box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
         border-radius: 4px;
         overflow: hidden; 
@@ -143,7 +142,7 @@
 
     .description p {
         margin: 0;
-        max-width: 300px;
+        max-width: 400px;
         width: 100%;
         word-wrap: break-word;
     }
@@ -178,6 +177,16 @@
     @media (min-width: 800px) {
         .events-container {
             grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* Juster til højre i første gird-kolonne */
+        .events-container > .event:nth-child(2n+1) {
+            justify-self: end;
+        }
+
+        /* Juster til venstre i anden grid-kolonne */
+        .events-container > .event:nth-child(2n) {
+            justify-self: start;
         }
     }
 

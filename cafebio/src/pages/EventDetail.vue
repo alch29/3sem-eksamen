@@ -1,13 +1,15 @@
 <template>
-    <div v-if="event">
+    <div v-if="event" class="background">
         <div class="banner-container">
             <img class="banner-image" src="/src/assets/images/event-img.png" alt="Event banner" />
         </div>
         <div class="main-details">
           <div>
             <div class="back-button">
-              <a href="#"><i class="fa-solid fa-arrow-left-long"></i><strong>Tilbage</strong></a>
-            </div>
+              <router-link to="/events">
+                <a href="#"><i class="fa-solid fa-arrow-left-long"></i><strong>Tilbage</strong></a>
+              </router-link>
+             </div>
             <h1>{{ event.name }}</h1>
             <!-- Lokation -->
             <p v-if="event.place && event.place.name">
@@ -115,6 +117,14 @@ watch(
 </script>
 
 <style scoped>
+
+.background {
+        background-image: url('../assets/images/site-background.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        /* min-height: 100vh; */
+}
 
 span {
   margin-right: 0.5rem;
