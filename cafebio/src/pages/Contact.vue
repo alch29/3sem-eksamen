@@ -9,7 +9,7 @@ import Map from '@/components/Map.vue';
             <div>
                 <img class="map-illustration" src="../assets/images/cafebio-kort.jpg" alt="illustreret kort af Café Biografens lokation.">
             </div>
-            <div>
+            <div class="contact-info">
                 <h1>Kontakt</h1>
                 <p>Amfipladsen 13, 5000 Odense C</p>
                 <p>Telefon: +45 66 13 16 16 <br>
@@ -29,9 +29,14 @@ import Map from '@/components/Map.vue';
 <style scoped>
  .map-illustration {
     width: 100%;
+    max-width: 500px;
  }
  .container {
     padding: 38px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
  }
 
  h4 {
@@ -40,5 +45,12 @@ import Map from '@/components/Map.vue';
 
  p {
     margin-bottom: 10px;
+ }
+
+ @media (min-width: 800px) {
+    .container {
+        flex-direction: row;
+        gap: 30px;
+    }
  }
 </style>
