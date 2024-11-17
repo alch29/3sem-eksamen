@@ -52,7 +52,7 @@ import Button from './CTAButton.vue';
 <style scoped>
     .book-table-container {
         background-color: var(--sand);
-        padding: 38px;
+        padding: 38px 38px 60px 38px;
         display: flex;
         justify-content: center;
         align-items: center;
