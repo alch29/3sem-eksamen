@@ -1,9 +1,12 @@
 <script setup>
-import Button from './CTAButton.vue'
+import Button from './CTAButton.vue';
 </script>
 
 <template>
     <div class="book-table-container">
+        <!-- <div>
+            <img class="illustration" src="../assets/images/reserverbordillustration.png" alt="Illustration af dækket bord.">
+        </div> -->
         <div>
             <div>
                 <h1>Reserver bord</h1>
@@ -53,6 +56,7 @@ import Button from './CTAButton.vue'
         display: flex;
         justify-content: center;
         align-items: center;
+        background-image: none;
     }
 
     input {
@@ -90,6 +94,12 @@ import Button from './CTAButton.vue'
         }
         .button {
         margin-top: auto;
+        }
+        .book-table-container {
+        background-image: url('../assets/images/reserverbord.png');
+        background-size: 300px;
+        background-repeat: no-repeat;
+        background-position: 10% center;
         }
     }
 </style>
