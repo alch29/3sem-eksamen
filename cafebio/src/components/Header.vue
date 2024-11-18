@@ -96,12 +96,14 @@
           Arrangementer
           <i class="fa-solid fa-chevron-down"></i>
           <ul class="under-items">
+            <router-link to="/events" ><li>Alle arrangementer</li></router-link>
             <li v-for="event in events" :key="event.id">
               <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
             </li>
           </ul>
         </div>
         <ul v-show="openDropdown === 'arrangementer'" class="under-items">
+          <router-link to="/events" ><li>Alle arrangementer</li></router-link>
           <li v-for="event in events" :key="event.id">
             <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
           </li>
@@ -228,7 +230,7 @@ nav img {
 
 /* Hovedlistepunkter */
 .menu-items li {
-  padding: 10px 20px;
+  padding: 10px 38px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -333,7 +335,7 @@ nav img {
     opacity: 1;
     visibility: visible;
   }
-  
+
   .dropdown:hover {
     color: rgba(250, 250, 250, 0.6);
   }
