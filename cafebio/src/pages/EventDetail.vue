@@ -1,7 +1,7 @@
 <template>
     <div v-if="event" class="background">
         <div class="banner-container">
-            <img class="banner-image" src="/src/assets/images/event-img.png" alt="Event banner" />
+          <img v-if="event.cover" :src="event.cover" alt="Event banner" class="banner-image" />
         </div>
         <div class="main-details">
           <div>
@@ -49,7 +49,7 @@
                 </p>       
             </div>
             <div>
-              <p class="text-event"><em>{{ event.description }}</em></p>
+              <p class="text-event"><em v-html="formattedDescription"></em></p>
             </div>
             <div>
               <Button :href="`https://www.facebook.com/events/${event.id}`" hoverStyle="sand-hover">Tilmeld
@@ -66,10 +66,15 @@
   </template>
   
 <script setup>
+// Vue bibliotek
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+
+// Firebase-related imports/ knap
 import { fetchEventFromFirebase } from '../firebaseService';
 import Button from '../components/CTAButton.vue';
+
 
 const route = useRoute();
 const event = ref(null);
@@ -114,6 +119,10 @@ watch(
     }
   }
 );
+// Burde ændre mellemrum
+const formattedDescription = computed(() => {
+  return event.value?.description.replace(/\n/g, '<br>') || '';
+});
 </script>
 
 <style scoped>
@@ -160,6 +169,8 @@ i {
   height: 300px;        
   display: block;       
   object-fit: cover;    
+  object-position: center; 
+  transform: scale(1.2); 
 }
 
 .main-details {
