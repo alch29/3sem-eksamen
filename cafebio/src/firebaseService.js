@@ -4,8 +4,14 @@ import { database } from './firebaseConfig';
 // Funktion til at gemme events i Firebase
 export async function saveEventsToFirebase(events) {
   for (let event of events) {
+// Check for cover-billede fra Facebook
+    const updatedEvent = {
+      ...event,
+      cover: event.cover ? event.cover.source : null, // Gem URL'en til billedet, hvis det findes
+    };
+
     const eventRef = firebaseRef(database, `events/${event.id}`);
-    await set(eventRef, event);
+    await set(eventRef, updatedEvent, event);
   }
   console.log("Events gemt i Firebase!");
 }
