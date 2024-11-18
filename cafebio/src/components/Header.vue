@@ -165,7 +165,7 @@ nav img {
   z-index: 10;
 }
 
-..menu-open {
+.menu-open {
     display: flex;
     flex-direction: column;
     background: rgba(0, 0, 0, 0.5); /* Baggrunds-overlay */
