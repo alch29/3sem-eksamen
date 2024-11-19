@@ -35,7 +35,7 @@ import NewsletterForm from './NewsletterForm.vue';
             <h4>Info</h4>
             <ul>
                 <li><a href="#">Kontakt</a></li>
-                <li><a href="#">Bestil billet</a></li>
+                <li><a href="#">Film program</a></li>
                 <li><a href="#">Gavekort</a></li>
             </ul>
             <img class="kontrolrapport" src="../assets/images/kontrolrapport.png" alt="Se kontrolrapport">

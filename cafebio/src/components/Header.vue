@@ -156,6 +156,9 @@ async function loadEvents() {
   events.value = await fetchEventsFromFirebase();
 }
 
+function closeDropdown() {
+  openDropdown.value = null;
+}
 
 function toggleDropdown(name) {
   console.log(`Toggle dropdown for: ${name}`);
