@@ -27,7 +27,7 @@
               : 'fa-solid fa-chevron-down'"></i>
         </div>
         <div
-          class="dropdown-header" v-else="toggleDesktopDropdown('biograf')">
+          class="dropdown-header" v-else>
           Biograf
           <i class="fa-solid fa-chevron-down"></i>
           <ul class="under-items">
@@ -64,7 +64,7 @@
               : 'fa-solid fa-chevron-down'"></i>
         </div>
         <div
-          class="dropdown-header" v-else="toggleDesktopDropdown('cafe')">
+          class="dropdown-header" v-else>
           Café
           <i class="fa-solid fa-chevron-down"></i>
           <ul class="under-items">
@@ -92,7 +92,7 @@
               : 'fa-solid fa-chevron-down'"></i>
         </div>
         <div
-          class="dropdown-header" v-else="toggleDesktopDropdown('arrangementer')">
+          class="dropdown-header" v-else>
           Arrangementer
           <i class="fa-solid fa-chevron-down"></i>
           <ul class="under-items">
@@ -117,7 +117,7 @@
           <i :class="isMobile ? (openDropdown === 'mere' ? 'fa-solid fa-minus' : 'fa-solid fa-plus') : 'fa-solid fa-chevron-down'"></i>
         </div>
         <div
-          class="dropdown-header" v-else="toggleDesktopDropdown('mere')">
+          class="dropdown-header" v-else>
           Mere
           <i class="fa-solid fa-chevron-down"></i>
           <ul class="under-items">
@@ -156,11 +156,6 @@ async function loadEvents() {
 
 function toggleDropdown(name) {
   console.log(`Toggle dropdown for: ${name}`);
-  openDropdown.value = openDropdown.value === name ? null : name;
-}
-
-function toggleDesktopDropdown(name) {
-  // Denne funktion bruges kun på desktop
   openDropdown.value = openDropdown.value === name ? null : name;
 }
 
