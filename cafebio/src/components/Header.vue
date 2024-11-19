@@ -11,7 +11,7 @@
     <ul :class="{ 'menu-items': true, 'menu-open': menuOpen }" v-show="menuOpen || !isMobile">
       
       <!-- Forside -->
-      <li class="non-drop-under-items"><a href="#">Forside</a></li>
+      <RouterLink to="/"><li><a href="#">Forside</a></li></RouterLink>
 
       <!-- Om os -->
       <li><a href="#">Om os</a></li>
@@ -33,7 +33,7 @@
           <ul class="under-items">
             <li><a href="#">Film program</a></li>
             <li><a href="#">Kommende film</a></li>
-            <li><a href="#">Cinemateket i Cafébiografen</a></li>
+            <li><a href="#">Cinemateket</a></li>
             <li><a href="#">Retbestilling</a></li>
             <li><a href="#">Baby bio</a></li>
             <li><a href="#">Senior bio</a></li>
@@ -44,7 +44,7 @@
         <ul v-show="openDropdown === 'biograf'" class="under-items">
           <li><a href="#">Film program</a></li>
           <li><a href="#">Kommende film</a></li>
-          <li><a href="#">Cinemateket i Cafébiografen</a></li>
+          <li><a href="#">Cinemateket</a></li> 
           <li><a href="#">Retbestilling</a></li>
           <li><a href="#">Baby bio</a></li>
           <li><a href="#">Senior bio</a></li>
@@ -103,7 +103,7 @@
           </ul>
         </div>
         <ul v-show="openDropdown === 'arrangementer'" class="under-items">
-          <router-link to="/events" ><li>Alle arrangementer</li></router-link>
+          <router-link to="/events"><li>Alle arrangementer</li></router-link>
           <li v-for="event in events" :key="event.id">
             <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
           </li>
@@ -123,20 +123,23 @@
           <ul class="under-items">
             <li><a href="#">Ledige stillinger</a></li>
             <li><a href="#">Ledsagerkort</a></li>
-            <li><a href="#">Kontakt</a></li>
+            <RouterLink to="/contact"><li><a href="#">Kontakt</a></li></RouterLink>
           </ul>
         </div>
         <ul v-show="openDropdown === 'mere'" class="under-items">
           <li><a href="#">Ledige stillinger</a></li>
           <li><a href="#">Ledsagerkort</a></li>
-          <li><a href="#">Kontakt</a></li>
+          <RouterLink to="/contact"><li><a href="#">Kontakt</a></li></RouterLink>
         </ul>
       </li>
     </ul>
-
     <!-- Kontakt-knap kun synlig på større skærme -->
-    <Button v-if="!isMobile" hoverStyle="red-hover" :to="'/contact'">Kontakt</Button>
-  </nav>
+      <div class="header-button" v-if="!isMobile">
+        <RouterLink to="/contact">
+          <Button hoverStyle="red-hover" :to="'/contact'">Kontakt</Button>
+        </RouterLink>
+      </div>
+    </nav>
 </template>
 
 <script setup>
@@ -258,10 +261,6 @@ nav img {
   transition: transform 0.3s ease;
 }
 
-/* .dropdown-header:hover {
-  color: rgba(250, 250, 250, 0.6);
-} */
-
 .dropdown .under-items li {
   padding: 5px 20px;
   list-style: none;
@@ -270,7 +269,6 @@ nav img {
 .dropdown .under-items li a {
   color: white;
   text-decoration: none;
-  /* transition: color 0.3s ease, background-color 0.3s ease; */
 }
 
 .dropdown .under-items li a:hover {
@@ -317,7 +315,6 @@ nav img {
   .dropdown .under-items {
     opacity: 0;
     visibility: hidden;
-    /* transition: opacity 0.3s ease, visibility 0.3s ease; */
     position: absolute;
     top: 100%;
     left: 0;

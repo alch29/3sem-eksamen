@@ -76,7 +76,6 @@
                         <Button hoverStyle="sand-hover">Læs mere</Button>
                     </router-link>
                 </div>
-                <router-link :to="`/events/${event.id}`"></router-link>
             </div>
         </div>
     </div>
