@@ -11,7 +11,7 @@
     <ul :class="{ 'menu-items': true, 'menu-open': menuOpen }" v-show="menuOpen || !isMobile">
       
       <!-- Forside -->
-      <RouterLink to="/"><li><a href="#">Forside</a></li></RouterLink>
+      <RouterLink to="/"><li>Forside</li></RouterLink>
 
       <!-- Om os -->
       <li><a href="#">Om os</a></li>
@@ -96,15 +96,15 @@
           Arrangementer
           <i class="fa-solid fa-chevron-down"></i>
           <ul class="under-items">
-            <router-link to="/events" ><li>Alle arrangementer</li></router-link>
-            <li v-for="event in events" :key="event.id">
+            <router-link to="/events"><li>Alle arrangementer</li></router-link>
+            <li v-for="event in upcomingEvents" :key="event.id">
               <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
             </li>
           </ul>
         </div>
         <ul v-show="openDropdown === 'arrangementer'" class="under-items">
           <router-link to="/events"><li>Alle arrangementer</li></router-link>
-          <li v-for="event in events" :key="event.id">
+          <li v-for="event in upcomingEvents" :key="event.id">
             <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
           </li>
         </ul>
@@ -143,22 +143,33 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { fetchEventsFromFirebase } from '../firebaseService';
-import Button from './CTAButton.vue'
+import Button from './CTAButton.vue';
 
 const menuOpen = ref(false);
 const openDropdown = ref(null);
 const isMobile = ref(window.innerWidth <= 1000);
 const events = ref([]);
+const loading = ref(true); // Tilføj loading state
 
 async function loadEvents() {
-  events.value = await fetchEventsFromFirebase();
+  try {
+    events.value = await fetchEventsFromFirebase();
+    console.log("Alle events hentet fra Firebase:", events.value);
+  } catch (error) {
+    console.error("Fejl ved hentning af events:", error);
+  } finally {
+    loading.value = false; // Sæt loading til false efter datahentning
+  }
 }
 
-function closeDropdown() {
-  openDropdown.value = null;
-}
+const upcomingEvents = computed(() => {
+  const now = new Date();
+  const filtered = events.value.filter(event => new Date(event.end_time) >= now);
+  console.log("Filtrerede kommende events:", filtered);
+  return filtered;
+});
 
 function toggleDropdown(name) {
   console.log(`Toggle dropdown for: ${name}`);
@@ -184,6 +195,7 @@ onBeforeUnmount(() => {
   window.removeEventListener("resize", handleResize);
 });
 </script>
+
 
 <style scoped>
 /* Generelle nav styling */
