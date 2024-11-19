@@ -11,11 +11,7 @@
     <ul :class="{ 'menu-items': true, 'menu-open': menuOpen }" v-show="menuOpen || !isMobile">
       
       <!-- Forside -->
-<<<<<<< HEAD
       <RouterLink to="/"><li>Forside</li></RouterLink>
-=======
-      <RouterLink to="/"><li><a href="#" @click="closeMenu()">Forside</a></li></RouterLink>
->>>>>>> f7e68d3065c65c52d093a43750a6b9af413245bb
 
       <!-- Om os -->
       <li><a href="#" @click="closeMenu()">Om os</a></li>
@@ -100,25 +96,15 @@
           Arrangementer
           <i class="fa-solid fa-chevron-down"></i>
           <ul class="under-items">
-<<<<<<< HEAD
             <router-link to="/events"><li>Alle arrangementer</li></router-link>
             <li v-for="event in upcomingEvents" :key="event.id">
-=======
-            <router-link to="/events"><li><a href="#">Alle arrangementer</a></li></router-link>
-            <li v-for="event in events" :key="event.id">
->>>>>>> f7e68d3065c65c52d093a43750a6b9af413245bb
               <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
             </li>
           </ul>
         </div>
         <ul v-show="openDropdown === 'arrangementer'" class="under-items">
-<<<<<<< HEAD
           <router-link to="/events"><li>Alle arrangementer</li></router-link>
           <li v-for="event in upcomingEvents" :key="event.id">
-=======
-          <router-link to="/events"><li><a href="#" @click="closeMenu()">Alle arrangementer</a></li></router-link>
-          <li v-for="event in events" :key="event.id" @click="closeMenu()">
->>>>>>> f7e68d3065c65c52d093a43750a6b9af413245bb
             <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
           </li>
         </ul>
@@ -178,19 +164,12 @@ async function loadEvents() {
   }
 }
 
-<<<<<<< HEAD
 const upcomingEvents = computed(() => {
   const now = new Date();
   const filtered = events.value.filter(event => new Date(event.end_time) >= now);
   console.log("Filtrerede kommende events:", filtered);
   return filtered;
 });
-=======
-function closeMenu() {
-  menuOpen.value = false;
-  openDropdown.value = null; 
-}
->>>>>>> f7e68d3065c65c52d093a43750a6b9af413245bb
 
 function toggleDropdown(name) {
   console.log(`Toggle dropdown for: ${name}`);
