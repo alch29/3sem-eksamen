@@ -11,10 +11,10 @@
     <ul :class="{ 'menu-items': true, 'menu-open': menuOpen }" v-show="menuOpen || !isMobile">
       
       <!-- Forside -->
-      <RouterLink to="/"><li><a href="#">Forside</a></li></RouterLink>
+      <RouterLink to="/"><li><a href="#" @click="closeMenu()">Forside</a></li></RouterLink>
 
       <!-- Om os -->
-      <li><a href="#">Om os</a></li>
+      <li><a href="#" @click="closeMenu()">Om os</a></li>
 
       <!-- Biograf -->
       <li class="dropdown">
@@ -42,14 +42,14 @@
           </ul>
         </div>
         <ul v-show="openDropdown === 'biograf'" class="under-items">
-          <li><a href="#">Film program</a></li>
-          <li><a href="#">Kommende film</a></li>
-          <li><a href="#">Cinemateket</a></li> 
-          <li><a href="#">Retbestilling</a></li>
-          <li><a href="#">Baby bio</a></li>
-          <li><a href="#">Senior bio</a></li>
-          <li><a href="#">Book en biografsal</a></li>
-          <li><a href="#">Filmklubber</a></li>
+          <li><a href="#" @click="closeMenu()">Film program</a></li>
+          <li><a href="#" @click="closeMenu()">Kommende film</a></li>
+          <li><a href="#" @click="closeMenu()">Cinemateket</a></li> 
+          <li><a href="#" @click="closeMenu()">Retbestilling</a></li>
+          <li><a href="#" @click="closeMenu()">Baby bio</a></li>
+          <li><a href="#" @click="closeMenu()">Senior bio</a></li>
+          <li><a href="#" @click="closeMenu()">Book en biografsal</a></li>
+          <li><a href="#" @click="closeMenu()">Filmklubber</a></li>
         </ul>
       </li>
 
@@ -73,8 +73,8 @@
           </ul>
         </div>
         <ul v-show="openDropdown === 'cafe'" class="under-items">
-          <li><a href="#">Menu kort</a></li>
-          <li><a href="#">Reserver bord</a></li>
+          <li><a href="#" @click="closeMenu()">Menu kort</a></li>
+          <li><a href="#" @click="closeMenu()">Reserver bord</a></li>
         </ul>
       </li>
 
@@ -96,15 +96,15 @@
           Arrangementer
           <i class="fa-solid fa-chevron-down"></i>
           <ul class="under-items">
-            <router-link to="/events" ><li>Alle arrangementer</li></router-link>
+            <router-link to="/events"><li><a href="#">Alle arrangementer</a></li></router-link>
             <li v-for="event in events" :key="event.id">
               <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
             </li>
           </ul>
         </div>
         <ul v-show="openDropdown === 'arrangementer'" class="under-items">
-          <router-link to="/events"><li>Alle arrangementer</li></router-link>
-          <li v-for="event in events" :key="event.id">
+          <router-link to="/events"><li><a href="#" @click="closeMenu()">Alle arrangementer</a></li></router-link>
+          <li v-for="event in events" :key="event.id" @click="closeMenu()">
             <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
           </li>
         </ul>
@@ -127,9 +127,9 @@
           </ul>
         </div>
         <ul v-show="openDropdown === 'mere'" class="under-items">
-          <li><a href="#">Ledige stillinger</a></li>
-          <li><a href="#">Ledsagerkort</a></li>
-          <RouterLink to="/contact"><li><a href="#">Kontakt</a></li></RouterLink>
+          <li><a href="#" @click="closeMenu()">Ledige stillinger</a></li>
+          <li><a href="#" @click="closeMenu()">Ledsagerkort</a></li>
+          <RouterLink to="/contact"><li><a href="#" @click="closeMenu()">Kontakt</a></li></RouterLink>
         </ul>
       </li>
     </ul>
@@ -156,8 +156,9 @@ async function loadEvents() {
   events.value = await fetchEventsFromFirebase();
 }
 
-function closeDropdown() {
-  openDropdown.value = null;
+function closeMenu() {
+  menuOpen.value = false;
+  openDropdown.value = null; 
 }
 
 function toggleDropdown(name) {
