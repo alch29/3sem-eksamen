@@ -1,10 +1,4 @@
 <template>
-    <!-- <button
-      :class="['custom-button', hoverStyle]"
-      @click="handleClick"
-    >
-      <slot></slot>
-    </button> -->
     <a 
       :href="href" 
       target="_blank" 
@@ -17,23 +11,12 @@
   
   <script setup>
   import { defineProps } from 'vue';
-  
-  // const props = defineProps({
-  //   hoverStyle: {
-  //     type: String,
-  //     default: 'red-hover', // Standard hover-stil er red-hover"
-  //   },
-  // });
-  
-  // const emit = defineEmits(['click']);
-  
-  // function handleClick() {
-  //   emit('click');
-  // }
+
   const props = defineProps({
     href: {
       type: String,
-      required: true
+      required: false,
+      default: '#'
     },
     hoverStyle: {
       type: String,

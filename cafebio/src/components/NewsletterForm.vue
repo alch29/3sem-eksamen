@@ -42,7 +42,7 @@ import Button from './CTAButton.vue'
         font-style: normal;
         color: rgba(0, 0, 0, 0.8);
         padding-left: 8px;
-        background-color: var(--off-white);
+        background-color: white;
     }
 
     form {

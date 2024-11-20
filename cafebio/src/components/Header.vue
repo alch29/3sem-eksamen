@@ -11,11 +11,11 @@
     <ul :class="{ 'menu-items': true, 'menu-open': menuOpen }" v-show="menuOpen || !isMobile">
       
       <!-- Forside -->
-      <RouterLink to="/"><li><a href="#">Forside</a></li></RouterLink>
+      <RouterLink to="/" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Forside</a></li></RouterLink>
 
       <!-- Om os -->
-      <li><a href="#">Om os</a></li>
-
+      <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Om os</a></li></RouterLink>
+      
       <!-- Biograf -->
       <li class="dropdown">
         <div
@@ -31,25 +31,25 @@
           Biograf
           <i class="fa-solid fa-chevron-down"></i>
           <ul class="under-items">
-            <li><a href="#">Film program</a></li>
-            <li><a href="#">Kommende film</a></li>
-            <li><a href="#">Cinemateket</a></li>
-            <li><a href="#">Retbestilling</a></li>
-            <li><a href="#">Baby bio</a></li>
-            <li><a href="#">Senior bio</a></li>
-            <li><a href="#">Book en biografsal</a></li>
-            <li><a href="#">Filmklubber</a></li>
+            <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Film program</a></li></RouterLink>
+            <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Kommende film</a></li></RouterLink>
+            <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Cinemateket</a></li></RouterLink>
+            <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Ret bestilling</a></li></RouterLink>
+            <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>OBaby bio</a></li></RouterLink>
+            <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Senior bio</a></li></RouterLink>
+            <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Book en biografsal</a></li></RouterLink>
+            <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Filmklubber</a></li></RouterLink>
           </ul>
         </div>
         <ul v-show="openDropdown === 'biograf'" class="under-items">
-          <li><a href="#">Film program</a></li>
-          <li><a href="#">Kommende film</a></li>
-          <li><a href="#">Cinemateket</a></li> 
-          <li><a href="#">Retbestilling</a></li>
-          <li><a href="#">Baby bio</a></li>
-          <li><a href="#">Senior bio</a></li>
-          <li><a href="#">Book en biografsal</a></li>
-          <li><a href="#">Filmklubber</a></li>
+          <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Film program</a></li></RouterLink>
+          <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Kommende film</a></li></RouterLink>
+          <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Cinemateket</a></li></RouterLink>
+          <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Ret bestilling</a></li></RouterLink>
+          <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">OBaby bio</a></li></RouterLink>
+          <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Senior bio</a></li></RouterLink>
+          <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Book en biografsal</a></li></RouterLink>
+          <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Filmklubber</a></li></RouterLink>
         </ul>
       </li>
 
@@ -68,18 +68,18 @@
           Café
           <i class="fa-solid fa-chevron-down"></i>
           <ul class="under-items">
-            <li><a href="#">Menu kort</a></li>
-            <li><a href="#">Reserver bord</a></li>
+            <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Menu kort</a></li></RouterLink>
+          <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Reserver bord</a></li></RouterLink>
           </ul>
         </div>
         <ul v-show="openDropdown === 'cafe'" class="under-items">
-          <li><a href="#">Menu kort</a></li>
-          <li><a href="#">Reserver bord</a></li>
+          <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Menu kort</a></li></RouterLink>
+          <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Reserver bord</a></li></RouterLink>
         </ul>
       </li>
 
       <!-- Gavekort -->
-      <li><a href="#">Gavekort</a></li>
+      <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Gavekort</a></li></RouterLink>
 
       <!-- Arrangementer -->
       <li class="dropdown">
@@ -96,16 +96,16 @@
           Arrangementer
           <i class="fa-solid fa-chevron-down"></i>
           <ul class="under-items">
-            <router-link to="/events"><li>Alle arrangementer</li></router-link>
+            <RouterLink to="/events" style="text-decoration: none; color: inherit;"><li><a>Alle arrangementer</a></li></RouterLink>
             <li v-for="event in headerEvents" :key="event.id">
               <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
             </li>
           </ul>
         </div>
         <ul v-show="openDropdown === 'arrangementer'" class="under-items">
-          <router-link to="/events"><li>Alle arrangementer</li></router-link>
+          <RouterLink to="/events" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Alle arrangementer</a></li></RouterLink>
           <li v-for="event in headerEvents" :key="event.id">
-            <router-link :to="`/events/${event.id}`">{{ event.name }}</router-link>
+            <router-link :to="`/events/${event.id}`" @click="closeMenu()">{{ event.name }}</router-link>
           </li>
         </ul>
       </li>
@@ -121,15 +121,15 @@
           Mere
           <i class="fa-solid fa-chevron-down"></i>
           <ul class="under-items">
-            <li><a href="#">Ledige stillinger</a></li>
-            <li><a href="#">Ledsagerkort</a></li>
-            <RouterLink to="/contact"><li><a href="#">Kontakt</a></li></RouterLink>
+            <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Ledige stillinger</a></li></RouterLink>
+            <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Ledsagerkort</a></li></RouterLink>
+            <RouterLink to="/contact" style="text-decoration: none; color: inherit;"><li><a>Kontakt</a></li></RouterLink>
           </ul>
         </div>
         <ul v-show="openDropdown === 'mere'" class="under-items">
-          <li><a href="#">Ledige stillinger</a></li>
-          <li><a href="#">Ledsagerkort</a></li>
-          <RouterLink to="/contact"><li><a href="#">Kontakt</a></li></RouterLink>
+          <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Ledige stillinger</a></li></RouterLink>
+          <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Ledsagerkort</a></li></RouterLink>
+          <RouterLink to="/contact" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Kontakt</a></li></RouterLink>
         </ul>
       </li>
     </ul>
@@ -204,6 +204,11 @@ function handleResize() {
     menuOpen.value = false;
     openDropdown.value = null;
   }
+}
+
+function closeMenu() {
+  menuOpen.value = false;
+  openDropdown.value = null; 
 }
 
 // Lifecycle hooks

@@ -12,7 +12,9 @@ app.use(router);
 app.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyBt_VfaL84otfW44aYWlyZebO8DJzNbVl4',
+    libraries: 'places',
   },
+  defer: true,
 });
 
 // Monter appen

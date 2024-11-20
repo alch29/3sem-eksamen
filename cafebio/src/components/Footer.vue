@@ -112,20 +112,26 @@ import NewsletterForm from './NewsletterForm.vue';
     }
     .footer-bottom {
         display: flex;
-        height: 80px;
+        height: 100px;
         background-color: var(--wine);
         text-align: center;
+        padding: 0 38px 0 38px;
+        align-items: center;
+    }
+
+    .footer-bottom p {
+        margin: 0;
     }
 
     @media (min-width: 800px) {
         .footer {
             flex-direction: row-reverse;
-            /* gap: 100px; */
             justify-content: space-around;
             align-items: flex-end;
         }
         .footer-bottom {
             justify-content: center;
+            height: 80px;
         }
     }
 </style>
