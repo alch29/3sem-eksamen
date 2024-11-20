@@ -147,35 +147,36 @@ import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { fetchEventsFromFirebase } from '../firebaseService';
 import Button from './CTAButton.vue';
 
+// Definer reaktive variabler
 const menuOpen = ref(false);
 const openDropdown = ref(null);
 const isMobile = ref(window.innerWidth <= 1000);
 const events = ref([]);
-const loading = ref(true); // Tilføj loading state
 
+// Computed property til at filtrere kommende events
+const upcomingEvents = computed(() => {
+  const now = new Date();
+  return events.value.filter(event => new Date(event.end_time) >= now);
+});
+
+// Funktion til at hente events
 async function loadEvents() {
   try {
     events.value = await fetchEventsFromFirebase();
-    console.log("Alle events hentet fra Firebase:", events.value);
+    console.log("Alle events:", events.value);
+    console.log("Kommende events:", upcomingEvents.value);
   } catch (error) {
     console.error("Fejl ved hentning af events:", error);
-  } finally {
-    loading.value = false; // Sæt loading til false efter datahentning
   }
 }
 
-const upcomingEvents = computed(() => {
-  const now = new Date();
-  const filtered = events.value.filter(event => new Date(event.end_time) >= now);
-  console.log("Filtrerede kommende events:", filtered);
-  return filtered;
-});
-
+// Funktion til at toggler dropdown-menu
 function toggleDropdown(name) {
   console.log(`Toggle dropdown for: ${name}`);
   openDropdown.value = openDropdown.value === name ? null : name;
 }
 
+// Funktion til at håndtere vinduesstørrelse
 function handleResize() {
   isMobile.value = window.innerWidth <= 1000;
   console.log("Resize event, isMobile:", isMobile.value);
@@ -185,6 +186,7 @@ function handleResize() {
   }
 }
 
+// Lifecycle hooks
 onMounted(() => {
   loadEvents();
   window.addEventListener("resize", handleResize);
@@ -195,6 +197,7 @@ onBeforeUnmount(() => {
   window.removeEventListener("resize", handleResize);
 });
 </script>
+
 
 
 <style scoped>

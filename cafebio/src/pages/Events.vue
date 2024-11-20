@@ -1,85 +1,107 @@
 <script setup>
-    import { ref, onMounted, watchEffect } from 'vue';
-    import { fetchEventsFromFirebase } from '../firebaseService';  // Importér funktionen fra firebaseService
-    import { useRoute } from 'vue-router';
-    import Button from '../components/CTAButton.vue';
+import { ref, onMounted, watchEffect, computed } from 'vue';
+import { fetchEventsFromFirebase } from '../firebaseService';  // Importér funktionen fra firebaseService
+import { useRoute } from 'vue-router';
+import Button from '../components/CTAButton.vue';
 
-    const events = ref([]);  // Opret en reaktiv liste til at gemme events
+const events = ref([]);  // Opret en reaktiv liste til at gemme events
 
-    async function loadEvents() {
-      events.value = await fetchEventsFromFirebase();  // Hent events fra Firebase og gem i `events`
-    }
+// Computed property til at filtrere kommende events
+const upcomingEvents = computed(() => {
+  const now = new Date();
+  return events.value.filter(event => new Date(event.end_time) >= now);
+});
 
-    onMounted(loadEvents);  // Kald loadEvents, når komponenten monteres
-    
-     // Overvåg ændringer og genindlæs events
-    watchEffect(async () => {
-      events.value = await fetchEventsFromFirebase();
-    });
+// Funktion til at hente events
+async function loadEvents() {
+  try {
+    events.value = await fetchEventsFromFirebase();
+    console.log("Alle events:", events.value);
+    console.log("Kommende events:", upcomingEvents.value);
+  } catch (error) {
+    console.error("Fejl ved hentning af events:", error);
+  }
+}
 
-    const route = useRoute();
-    const event = ref(null);
+onMounted(loadEvents);  // Kald loadEvents, når komponenten monteres
 
-    // Funktion til at formatere datoen alene
-    const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("da-DK", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-    });
-    };
+// Overvåg ændringer og genindlæs events
+watchEffect(async () => {
+  events.value = await fetchEventsFromFirebase();
+});
 
+// Hent specifik event baseret på route (hvis nødvendigt)
+const route = useRoute();
+const event = ref(null);
+
+// Funktion til at formatere datoen alene
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("da-DK", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+  });
+};
 </script>
+
 
 <template>
     <div class="background">
-        <div>
-            <h1>Arrangementer</h1>
+      <div>
+        <h1>Arrangementer</h1>
+      </div>
+      <div class="events-container">
+        <!-- Check om der er nogen kommende events -->
+        <div v-if="upcomingEvents.length === 0">
+          <p>Der er ingen kommende arrangementer.</p>
         </div>
-        <div class="events-container">
-            <div class="event" v-for="event in events" :key="event.id">
-                <div class="banner-container">
-                    <img class="banner-image" src="/src/assets/images/event-img.png" alt="Event banner" />
-                </div>
-                <div class="event-text">
-                    <div>
-                        <h4><strong>{{ event.name }}</strong></h4>
-                    </div>
-                        <!-- Start Dato -->
-                        <div>
-                        <div class="start-day">
-                        <p>
-                        <span>
-                            <i class="fa-regular fa-calendar-days"></i>
-                            Start dato:
-                        </span> {{ formatDate(event.start_time) }}
-                        </p>
-                        </div>
-                
-                        <!-- Slut Dato -->
-                        <div class="end-day">
-                            <p>
-                            <span>
-                                <i class="fa-regular fa-calendar-days"></i>
-                                Slut dato:
-                            </span> {{ formatDate(event.end_time) }}
-                            </p>      
-                        </div>
-                    </div>
-                    <div class="description">
-                        <p><em>{{ event.description }}</em></p>
-                    </div>
-                </div>
-                <div class="events-button">
-                    <router-link :to="`/events/${event.id}`">
-                        <Button hoverStyle="sand-hover">Læs mere</Button>
-                    </router-link>
-                </div>
+        
+        <!-- Vis kommende events -->
+        <div class="event" v-for="event in upcomingEvents" :key="event.id">
+          <div class="banner-container">
+            <img v-if="event.cover" :src="event.cover" alt="Event banner" class="banner-image" />
+          </div>
+          <div class="event-text">
+            <div>
+              <h4><strong>{{ event.name }}</strong></h4>
             </div>
+            <!-- Start Dato -->
+            <div>
+              <div class="start-day">
+                <p>
+                  <span>
+                    <i class="fa-regular fa-calendar-days"></i>
+                    Start dato:
+                  </span> {{ formatDate(event.start_time) }}
+                </p>
+              </div>
+            
+              <!-- Slut Dato -->
+              <div class="end-day">
+                <p>
+                  <span>
+                    <i class="fa-regular fa-calendar-days"></i>
+                    Slut dato:
+                  </span> {{ formatDate(event.end_time) }}
+                </p>      
+              </div>
+            </div>
+            <div class="description">
+              <p><em>{{ event.description }}</em></p>
+            </div>
+          </div>
+          <div class="events-button">
+            <router-link :to="`/events/${event.id}`">
+              <Button hoverStyle="sand-hover">Læs mere</Button>
+            </router-link>
+          </div>
+          <router-link :to="`/events/${event.id}`"></router-link>
         </div>
+      </div>
     </div>
-</template>
+  </template>
+  
 
 <style scoped>
     .background {
