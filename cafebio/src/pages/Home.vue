@@ -6,7 +6,6 @@ import Map from '@/components/Map.vue';
 <template> 
 <div class="hero">
     <video
-    controls
       autoplay
       loop
       muted
