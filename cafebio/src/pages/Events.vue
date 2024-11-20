@@ -4,12 +4,27 @@ import { fetchEventsFromFirebase } from '../firebaseService';  // Importér funk
 import { useRoute } from 'vue-router';
 import Button from '../components/CTAButton.vue';
 
-const events = ref([]);  // Opret en reaktiv liste til at gemme events
+const events = ref([]);  // Reaktiv liste til at gemme events
 
 // Computed property til at filtrere kommende events
 const upcomingEvents = computed(() => {
   const now = new Date();
-  return events.value.filter(event => new Date(event.end_time) >= now);
+  const filtered = events.value.filter(event => {
+    const eventEndTime = new Date(event.end_time);
+    if (isNaN(eventEndTime)) {
+      console.warn(`Ugyldig end_time for event ${event.id}: ${event.end_time}`);
+      return false;
+    }
+    const isUpcoming = eventEndTime >= now;
+    console.log(`Event ${event.id} (${event.name}) - Upcoming: ${isUpcoming}`);
+    return isUpcoming;
+  });
+
+  // Sortér de filtrerede events efter start_time (stigende)
+  filtered.sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
+
+  console.log("Filtrerede og sorterede kommende events:", filtered);
+  return filtered;
 });
 
 // Funktion til at hente events
@@ -23,7 +38,9 @@ async function loadEvents() {
   }
 }
 
-onMounted(loadEvents);  // Kald loadEvents, når komponenten monteres
+onMounted(() => {
+  loadEvents();
+});
 
 // Overvåg ændringer og genindlæs events
 watchEffect(async () => {
@@ -46,6 +63,7 @@ const formatDate = (dateString) => {
 </script>
 
 
+
 <template>
     <div class="background">
       <div>
@@ -57,14 +75,14 @@ const formatDate = (dateString) => {
           <p>Der er ingen kommende arrangementer.</p>
         </div>
         
-        <!-- Vis kommende events -->
+        <!-- Vis alle kommende events, sorteret -->
         <div class="event" v-for="event in upcomingEvents" :key="event.id">
           <div class="banner-container">
             <img v-if="event.cover" :src="event.cover" alt="Event banner" class="banner-image" />
           </div>
           <div class="event-text">
             <div>
-              <h4><strong>{{ event.name }}</strong></h4>
+              <h4><strong>{{ event.name || 'Uden navn' }}</strong></h4>
             </div>
             <!-- Start Dato -->
             <div>
@@ -88,7 +106,7 @@ const formatDate = (dateString) => {
               </div>
             </div>
             <div class="description">
-              <p><em>{{ event.description }}</em></p>
+              <p><em>{{ event.description || 'Ingen beskrivelse tilgængelig.' }}</em></p>
             </div>
           </div>
           <div class="events-button">
@@ -96,11 +114,11 @@ const formatDate = (dateString) => {
               <Button hoverStyle="sand-hover">Læs mere</Button>
             </router-link>
           </div>
-          <router-link :to="`/events/${event.id}`"></router-link>
         </div>
       </div>
     </div>
   </template>
+  
   
 
 <style scoped>
