@@ -49,7 +49,7 @@
               <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Kommende film</a></li></RouterLink>
               <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Cinemateket</a></li></RouterLink>
               <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Ret bestilling</a></li></RouterLink>
-              <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">OBaby bio</a></li></RouterLink>
+              <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Baby bio</a></li></RouterLink>
               <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Senior bio</a></li></RouterLink>
               <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Book en biografsal</a></li></RouterLink>
               <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a @click="closeMenu()">Filmklubber</a></li></RouterLink>
