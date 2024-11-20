@@ -34,9 +34,10 @@ import NewsletterForm from './NewsletterForm.vue';
         <div>
             <h4>Info</h4>
             <ul>
-                <li><a href="#">Kontakt</a></li>
-                <li><a href="#">Film program</a></li>
-                <li><a href="#">Gavekort</a></li>
+                <RouterLink to="/contact" style="text-decoration: none; color: inherit;"><li><a>Kontakt</a></li></RouterLink>
+                <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Menu kort</a></li></RouterLink>
+                <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Film program</a></li></RouterLink>
+                <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Gavekort</a></li></RouterLink>
             </ul>
             <img class="kontrolrapport" src="../assets/images/kontrolrapport.png" alt="Se kontrolrapport">
         </div>
