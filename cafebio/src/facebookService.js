@@ -2,7 +2,7 @@ import { fetchEventFromFirebase, saveEventsToFirebase } from './firebaseService'
 
 //  `page_id` og Page Access Token
 const pageId = "465818663287850";            // Facebook-side ID
-const accessToken = "EAANL70Md5fYBOwdOrMHrXy20RaLfx51hFhrYKs2ip8pYM5wkOTtx77LdjUMqgq8zXoSOMUBMrE1RYy2VruuA0vSqGg4f2xbT9bC2AemDOJRAiasIgBjHap8KsHYBTopBJap8SNXHYjRBlFvXGsL3OqLZAwTZCco4oJQpw6hJuczmhWytI6CJiSYzjNptZAINretyiQ0gc5B68qxEFxWGVZCEm6kZD";
+const accessToken = "EAANL70Md5fYBO7zHWI9D03ZCJOf1HqEJsO5GwjkAuGxNOhebwEhpmBpu0GFjedJAyZBakZBzvLgqu2zzzlZCx2zAvSvnZCglQ5LRk7HVCS6KqleVwN3hFQ7v9FqNOTlSoPJZAZCTtdskENZB8zLPuNDgY1nLtVZAj9gQpijVIeqE9fzfKCiHol3ZBc5qBBpOgVInY9caZAq03R4RZCqa5eLYQJ7QzWWJeN0KFwZDZD";
 
 export async function fetchFacebookEvents() {
   console.log("Henter events fra Facebook");
