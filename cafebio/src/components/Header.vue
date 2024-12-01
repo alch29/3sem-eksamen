@@ -38,7 +38,7 @@
                 <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Kommende film</a></li></RouterLink>
                 <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Cinemateket</a></li></RouterLink>
                 <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Ret bestilling</a></li></RouterLink>
-                <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>OBaby bio</a></li></RouterLink>
+                <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Baby bio</a></li></RouterLink>
                 <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Senior bio</a></li></RouterLink>
                 <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Book en biografsal</a></li></RouterLink>
                 <RouterLink to="/no-page" style="text-decoration: none; color: inherit;"><li><a>Filmklubber</a></li></RouterLink>
